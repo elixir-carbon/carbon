@@ -1,0 +1,22 @@
+<h1>Register</h1>
+
+<%= form_for @changeset, "/register", [class: "form"], fn f -> %>
+	<div class="form__group">
+		<%= label f, :email %>
+		<%= text_input f, :email %>
+		<%= error_tag f, :email %>
+	</div>
+	<div class="form__group">
+		<%= label f, :password %>
+		<%= password_input f, :password %>
+		<%= error_tag f, :password %>
+	</div>
+	<div class="form__group">
+		<%= label f, :password_confirmation %>
+		<%= password_input f, :password_confirmation %>
+		<%= error_tag f, :password_confirmation %>
+	</div>
+	<div class="form__group form__actions">
+		<%= submit "Login" %>
+	</div>
+<% end %>
