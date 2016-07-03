@@ -19,6 +19,7 @@ defmodule Carbon.User do
     |> cast(params, [:email, :password])
     |> validate_required([:email, :password])
     |> validate_confirmation(:password)
+    |> Carbon.hash_password
   end
 
   def changeset(:login, user, params) do

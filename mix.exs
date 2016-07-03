@@ -15,8 +15,7 @@ defmodule Carbon.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :postgrex, :phoenix, :phoenix_html],
-     mod: {Carbon, []}]
+    [applications: [:logger, :phoenix, :phoenix_html]]
   end
 
   # Dependencies can be Hex packages:
@@ -32,7 +31,6 @@ defmodule Carbon.Mixfile do
     [{:phoenix, "~> 1.2"},
      {:phoenix_html, "~> 2.6"},
      {:phoenix_ecto, "~> 3.0"},
-     {:postgrex, "~> 0.11.0"},
      {:comeonin, "~> 2.5"},
      {:gettext, "~> 0.11"}]
   end

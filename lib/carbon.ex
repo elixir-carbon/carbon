@@ -1,33 +1,38 @@
 defmodule Carbon do
-	use Application
+  import Ecto.Changeset
+  alias Ecto.Changeset
 
-  # See http://elixir-lang.org/docs/stable/elixir/Application.html
-  # for more information on OTP Applications
-  def start(_type, _args) do
-    import Supervisor.Spec, warn: false
-
-    # Define workers and child supervisors to be supervised
-    children = [
-      # Starts a worker by calling: Foo.Worker.start_link(arg1, arg2, arg3)
-      # worker(Foo.Worker, [arg1, arg2, arg3]),
-      worker(Carbon.Repo, []),
-    ]
-
-    # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
-    # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Foo.Supervisor]
-    Supervisor.start_link(children, opts)
+  def attempt(email, password) do
+    with {:ok, user} <- repo.get_by(Carbon.User, email: email),
+         {:ok, true} <- verify_password(password, user.password_hash),
+         do: user
   end
-	
-	def hash_password(password) do
-    Comeonin.hashpwsalt(password)
-	end
+  def attempt(_), do: false
 
-	def verify_password(password, hash) do
-    Comeonin.checkpw(password, hash)
-	end
+  def hash_password(%Changeset{} = changeset, password) do
+    put_change(changeset, :password_hash, hash_password(password))
+  end
 
-	def say_hello do
-		"hello from carbon!"
-	end
+  def hash_password(%Changeset{} = changeset) do
+    case get_change(changeset, :password) do
+      nil -> changeset
+      password -> hash_password(changeset, password)
+    end
+  end
+
+  def hash_password(password) do
+    Comeonin.Bcrypt.hashpwsalt(password)
+  end
+
+  def verify_password(password, hash) do
+    Comeonin.Bcrypt.checkpw(password, hash)
+  end
+
+  def repo do
+    Application.get_env(:carbon, :repo)
+  end
+
+  def model do
+    Application.get_env(:carbon, :model, Carbon.User)
+  end
 end

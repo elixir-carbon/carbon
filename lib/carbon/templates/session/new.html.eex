@@ -1,12 +1,12 @@
 <h1>Login</h1>
 
-<%= if @changeset.action do %>
+<%= if @conn.assigns[:error] do %>
 	<div class="error">
 		Invalid email or password
 	</div>
 <% end %>
 
-<%= form_for @changeset, "/login", [class: "form"], fn f -> %>
+<%= form_for @conn, "/login", [as: :login, class: "form"], fn f -> %>
 	<div class="form__group">
 		<%= label f, :email %>
 		<%= text_input f, :email %>

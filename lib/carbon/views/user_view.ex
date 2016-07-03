@@ -1,6 +1,5 @@
 defmodule Carbon.UserView do
-	use Phoenix.View, root: "lib/carbon/templates"
-	use Phoenix.HTML
+	use Carbon.Web, :view
 
 	def error_tag(form, field) do
 		if error = form.errors[field] do
@@ -8,7 +7,7 @@ defmodule Carbon.UserView do
 		end
 	end
 
-  def translate_error({msg, opts}) do
+  def translate_error({msg, _opts}) do
     msg
   end
 end

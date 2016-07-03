@@ -1,27 +1,33 @@
 defmodule Carbon.SessionController do
-  use Phoenix.Controller
-  alias Carbon.User
-  alias Carbon.Repo
+  use Carbon.Web, :controller
 
   def new(conn, _params) do
-    changeset = User.changeset(:login, %User{})
-    render(conn, "new.html", layout: false, changeset: changeset)
+    render(conn, "new.html")
   end
 
-  def create(conn, params) do
-    changeset = User.changeset(:login, %User{}, params)
-    case Repo.insert(changeset) do
-      {:ok, user} ->
+  def create(conn, %{"login" => %{"email" => "", "password" => _}}) do
+    render(conn, "new.html", error: true)
+  end
+
+  def create(conn, %{"login" => %{"email" => _, "password" => ""}}) do
+    render(conn, "new.html", error: true)
+  end
+
+  def create(conn, %{"login" => %{"email" => email, "password" => password}}) do
+    case Carbon.attempt(email, password) do
+      # TODO: implment flash messages
+      nil -> render(conn, "new.html", error: true)
+      false -> render(conn, "new.html", error: true)
+      user -> 
         conn
-        |> login_user(user)
+        |> Carbon.Auth.login(user)
         |> redirect(to: "/")
-      {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
     end
   end
 
-  def login_user(conn, user) do
+  def delete(conn, _params) do
     conn
-    |> Plug.Conn.put_session(:current_user, user)
+    |> put_session(:user_id, nil)
+    |> redirect(to: "/login")
   end
 end
