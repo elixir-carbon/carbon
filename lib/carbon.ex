@@ -3,11 +3,11 @@ defmodule Carbon do
   alias Ecto.Changeset
 
   def attempt(email, password) do
-    with {:ok, user} <- repo.get_by(Carbon.User, email: email),
+    with {:ok, user} <- repo.get_by(model(), email: email),
          {:ok, true} <- verify_password(password, user.password_hash),
          do: user
   end
-  def attempt(_), do: false
+  def attempt(_), do: nil
 
   def hash_password(%Changeset{} = changeset, password) do
     put_change(changeset, :password_hash, hash_password(password))
@@ -26,6 +26,10 @@ defmodule Carbon do
 
   def verify_password(password, hash) do
     Comeonin.Bcrypt.checkpw(password, hash)
+  end
+
+  def get_user(user_id) do
+    repo.get(model(), user_id)
   end
 
   def repo do

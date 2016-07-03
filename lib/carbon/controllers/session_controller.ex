@@ -6,23 +6,30 @@ defmodule Carbon.SessionController do
   end
 
   def create(conn, %{"login" => %{"email" => "", "password" => _}}) do
-    render(conn, "new.html", error: true)
+    render_with_error(conn)
   end
 
   def create(conn, %{"login" => %{"email" => _, "password" => ""}}) do
-    render(conn, "new.html", error: true)
+    render_with_error(conn)
   end
 
   def create(conn, %{"login" => %{"email" => email, "password" => password}}) do
     case Carbon.attempt(email, password) do
-      # TODO: implment flash messages
-      nil -> render(conn, "new.html", error: true)
-      false -> render(conn, "new.html", error: true)
-      user -> 
-        conn
-        |> Carbon.Auth.login(user)
-        |> redirect(to: "/")
+      user when is_map(user) -> login_user(conn, user)
+      _ -> render_with_error(conn)
     end
+  end
+
+  defp render_with_error(conn) do
+    conn
+    |> put_flash(:error, "Invalid email or password")
+    |> render("new.html")
+  end
+
+  defp login_user(conn, user) do
+    conn
+    |> Carbon.Auth.login(user)
+    |> redirect(to: "/")
   end
 
   def delete(conn, _params) do

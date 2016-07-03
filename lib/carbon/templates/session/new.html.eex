@@ -1,11 +1,5 @@
 <h1>Login</h1>
 
-<%= if @conn.assigns[:error] do %>
-	<div class="error">
-		Invalid email or password
-	</div>
-<% end %>
-
 <%= form_for @conn, "/login", [as: :login, class: "form"], fn f -> %>
 	<div class="form__group">
 		<%= label f, :email %>

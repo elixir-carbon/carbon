@@ -1,7 +1,6 @@
 defmodule Carbon.Routes do
   defmacro __using__(_) do
     quote do
-      # use Phoenix.Router
       import Carbon.Auth
 
       pipeline :auth do
@@ -21,8 +20,7 @@ defmodule Carbon.Routes do
         pipe_through [:browser, :auth]
 
         get "/profile", Carbon.UserController, :show
-        # TODO: use delete http method
-        get "/logout", Carbon.SessionController, :delete
+        delete "/logout", Carbon.SessionController, :delete
       end
     end
   end
