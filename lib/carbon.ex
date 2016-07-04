@@ -3,9 +3,12 @@ defmodule Carbon do
   alias Ecto.Changeset
 
   def attempt(email, password) do
-    with {:ok, user} <- repo.get_by(model(), email: email),
-         {:ok, true} <- verify_password(password, user.password_hash),
-         do: user
+    user = repo.get_by(model(), email: email)
+    if (user && verify_password(password, user.password_hash)) do
+      user
+    else
+      nil
+    end
   end
   def attempt(_), do: nil
 

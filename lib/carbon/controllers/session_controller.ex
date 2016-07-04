@@ -34,7 +34,7 @@ defmodule Carbon.SessionController do
 
   def delete(conn, _params) do
     conn
-    |> put_session(:user_id, nil)
+    |> Carbon.Auth.logout
     |> redirect(to: "/login")
   end
 end
