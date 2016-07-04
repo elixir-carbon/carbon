@@ -1,10 +1,10 @@
 # Carbon
 
-**TODO: Add description**
+User library for phoenix and elixir.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+Carbon is [available in Hex](https://hex.pm/packages/carbon), and can be installed as:
 
   1. Add `carbon` to your list of dependencies in `mix.exs`:
 
@@ -22,3 +22,12 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
     end
     ```
 
+## Contributing
+
+Contributions are welcome! We love you if you send a PR with some tests.
+
+## License
+
+Copyright (c) 2016, al-razi.
+
+Apache 2 License.

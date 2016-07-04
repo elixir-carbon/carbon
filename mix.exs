@@ -10,7 +10,7 @@ defmodule Carbon.Mixfile do
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     description: "Auth pacakge for elixir",
+     description: "User library for phoenix and elixir.",
      deps: deps()]
   end
 
