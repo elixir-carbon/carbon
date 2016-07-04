@@ -1,13 +1,16 @@
 defmodule Carbon.Mixfile do
   use Mix.Project
+  @repo_url "http://github.com/elixirdrops/carbon"
 
   def project do
     [app: :carbon,
      version: "0.1.0",
      elixir: "~> 1.3",
+     package: package(),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     description: "Auth pacakge for elixir",
      deps: deps()]
   end
 
@@ -16,6 +19,13 @@ defmodule Carbon.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     [applications: [:logger, :phoenix, :phoenix_html]]
+  end
+
+  def package do
+    [maintainers: ["Al Razi"],
+     licenses: ["Apache 2.0"],
+     links: %{"GitHub" => @repo_url},
+     files: ~w(lib lib priv test web mix.exs *.md)]
   end
 
   # Dependencies can be Hex packages:
