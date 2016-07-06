@@ -4,6 +4,7 @@ defmodule Carbon.User do
   import Ecto.Changeset
   import Ecto.Query
 
+
   schema "users" do
     field :email, :string
     field :password_hash, :string
@@ -14,7 +15,7 @@ defmodule Carbon.User do
   end
 
   @required_fields ~w(email password)
-  @optional_fields ~w(email password_hash)
+  @required_fields_reset ~w(password, password_confirmation)
 
   def changeset(action, user, params \\ %{})
   def changeset(:create, user, params) do
@@ -22,7 +23,7 @@ defmodule Carbon.User do
     |> cast(params, @required_fields)
     |> validate_required(@required_fields)
     |> validate_confirmation(:password)
-    |> hash_password
+    |> hash_password()
   end
 
   def changeset(:update, user, params) do
@@ -31,7 +32,15 @@ defmodule Carbon.User do
     |> validate_required([:email, :password_hash])
   end
 
-  def hash_password(%Changeset{} = changeset) do
+  def changeset(:reset, user, params) do
+    user
+    |> cast(params, @required_fields_reset)
+    |> validate_required(@required_fields_reset)
+    |> validate_confirmation(:password)
+    |> hash_password()
+  end
+
+  def hash_password(changeset) do
     password = get_change(changeset, :password)
     password_hash = Carbon.hash_password(password)
     put_change(changeset, :password_hash, password_hash)

@@ -8,41 +8,42 @@ defmodule Carbon.PasswordController do
   end
 
   def create(conn, %{"user" => %{"email" => ""}}) do
-    render_with_error(conn)
-  end
-  def create(conn, %{"user" => %{"email" => email}}) do
-    user = repo.get_by(User, )
-    case repo.insert(params) do
-      {:ok, _user} ->
-        conn
-        |> put_flash(:info, "Please check your email and follow the instructions.")
-        |> redirect(to: "/")
-      {:error, _changeset} ->
-        render_with_error(conn)
-    end
-  end
-
-  defp render_with_error(conn) do
     conn
-    |> put_flash(:error, "Please provide a valid email.")
+    |> put_flash(:error, "We could not find that email, Sorry!")
     |> render("new.html")
   end
 
-  def edit(conn, _params) do
-    render(conn, "edit.html")
+  def create(conn, %{"user" => %{"email" => email} = params}) do
+    user = repo.get_by(User, email: email)
+    if user do
+      changeset = User.changeset(:update, user, params)
+      case repo.update(changeset) do
+        {:ok, user} -> Carbon.Mailer.send_password_reset(user)
+        {:error, _changeset} -> :error # I don't know maybe, do nothing
+      end
+    end
+    
+    conn
+    |> put_flash(:info, "Please check your email to reset your password.")
+    |> redirect(to: "/")
   end
 
-  def update(conn, %{"user" => params}) do
-    user = repo.get_by!(User, token: params["token"])
-    changeset = User.changeset(:update, user, params)
+  def edit(conn, _params) do
+    changeset = User.changeset(:reset, %User{})
+    render(conn, "edit.html", changeset: changeset)
+  end
+
+  def update(conn, %{"user" => %{"token" => token} = params}) do
+    user = repo.get_by!(User, token: token)
+    changeset = User.changeset(:reset, user, params)
 
     case repo.update(changeset) do
       {:ok, _user} ->
         conn
         |> put_flash(:info, "Your password has been changed successfully.")
         |> redirect(to: "/login")
-      {:error, _changeset} ->
-        render(conn, "edit.html")
+      {:error, changeset} ->
+        render(conn, "edit.html", changeset: changeset)
     end
   end
 end

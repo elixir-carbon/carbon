@@ -1,7 +1,4 @@
 defmodule Carbon do
-  import Ecto.Changeset
-  alias Ecto.Changeset
-
   def hash_password(password) do
     Comeonin.Bcrypt.hashpwsalt(password)
   end

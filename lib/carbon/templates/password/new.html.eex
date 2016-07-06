@@ -1,4 +1,4 @@
-<h1>Forgot password</h1>
+<h1>Reset password</h1>
 
 <%= form_for @conn, "/password/create", [as: :user, class: "form"], fn f -> %>
 	<div class="form__group">
