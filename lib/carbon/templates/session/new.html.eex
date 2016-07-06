@@ -13,3 +13,5 @@
 		<%= submit "Login" %>
 	</div>
 <% end %>
+
+<a href="/password/reset">Forgot password?</a>

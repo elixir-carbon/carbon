@@ -1,0 +1,11 @@
+<h1>Forgot password</h1>
+
+<%= form_for @conn, "/password/create", [as: :user, class: "form"], fn f -> %>
+	<div class="form__group">
+		<%= label f, :email %>
+		<%= email_input f, :email %>
+	</div>
+	<div class="form__actions">
+		<%= submit "Save"  %>
+	</div>
+<% end %>

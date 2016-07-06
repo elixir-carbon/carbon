@@ -13,18 +13,27 @@ defmodule Carbon.User do
     timestamps
   end
 
+  @required_fields ~w(email password)
+  @optional_fields ~w(email password_hash)
+
   def changeset(action, user, params \\ %{})
   def changeset(:create, user, params) do
     user
-    |> cast(params, [:email, :password])
-    |> validate_required([:email, :password])
+    |> cast(params, @required_fields)
+    |> validate_required(@required_fields)
     |> validate_confirmation(:password)
-    |> Carbon.hash_password
+    |> hash_password
   end
 
-  def changeset(:login, user, params) do
+  def changeset(:update, user, params) do
     user
-    |> cast(params, [:email, :password])
-    |> validate_required([:email, :password])
+    |> cast(params, [:email, :password_hash])
+    |> validate_required([:email, :password_hash])
+  end
+
+  def hash_password(%Changeset{} = changeset) do
+    password = get_change(changeset, :password)
+    password_hash = Carbon.hash_password(password)
+    put_change(changeset, :password_hash, password_hash)
   end
 end

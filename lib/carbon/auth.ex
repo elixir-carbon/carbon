@@ -19,15 +19,15 @@ defmodule Carbon.Auth do
   def fetch_current_user(conn, _) do
     case user_logged_in?(conn) do
       nil -> conn
-      user_id  -> put_current_user(conn, user_id)
+      user_id  -> put_current_user(conn, get_user(user_id))
     end
   end
 
-  def put_current_user(conn, user_id) do
-    #  avoid extra calls to the database 
-    # if the user is already in the session
+  def put_current_user(conn, user) do
+    # avoid extra calls to the database 
+    # if the user is already in session
     case conn.assigns[:current_user] do
-      nil -> assign(conn, :current_user, get_user(user_id))
+      nil -> assign(conn, :current_user, user)
       _user -> conn
     end
   end
@@ -36,23 +36,16 @@ defmodule Carbon.Auth do
     get_session(conn, :user_id)
   end
 
-  # TODO: support for changesets
   def login(conn, user) when is_map(user) do
     conn
     |> put_session(:user_id, user.id)
     |> assign(:user_id, user.id)
   end
 
-  def login(conn, user) when is_integer(user) do
+  def login(conn, user_id) when is_integer(user_id) do
     conn
-    |> put_session(:user_id, user)
-    |> assign(:user_id, user)
-  end
-
-  def login(conn, user) when is_map(user) do
-    conn
-    |> put_session(:user_id, user.id)
-    |> assign(:user_id, user.id)
+    |> put_session(:user_id, user_id)
+    |> assign(:user_id, user_id)
   end
 
   def logout(conn) do

@@ -1,7 +1,7 @@
 defmodule Carbon.UserController do
   use Phoenix.Controller
+  import Carbon
   alias Carbon.User
-  alias Carbon.Repo
 
   def new(conn, _params) do
     changeset = User.changeset(:create, %User{})
@@ -10,7 +10,7 @@ defmodule Carbon.UserController do
 
   def create(conn, %{"user" => user_params}) do
     user = User.changeset(:create, %User{}, user_params)
-    case Repo.insert(user) do
+    case repo.insert(user) do
       {:ok, _user} ->
         # maybe send registration email
         redirect(conn, to: "/login")

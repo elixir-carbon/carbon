@@ -1,0 +1,15 @@
+<h1>New Password</h1>
+
+<%= form_for @conn, "/password/update", [as: :password, class: "form"], fn f -> %>
+	<div class="form__group">
+		<%= label f, :password %>
+		<%= password_input f, :password %>
+	</div>
+	<div class="form__group">
+		<%= label f, :password %>
+		<%= password_input f, :password %>
+	</div>
+	<div class="form__actions">
+		<%= submit "Save"  %>
+	</div>
+<% end %>

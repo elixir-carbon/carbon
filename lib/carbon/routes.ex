@@ -12,6 +12,10 @@ defmodule Carbon.Routes do
 
         get "/login", Carbon.SessionController, :new
         post "/login", Carbon.SessionController, :create
+        get "/password/forgot", Carbon.PasswordController, :forgot
+        post "/password/reset", Carbon.PasswordController, :reset
+        get "/password/new", Carbon.PasswordController, :new
+        post "/password/create", Carbon.PasswordController, :create
         get "/register", Carbon.UserController, :new
         post "/register", Carbon.UserController, :create
       end

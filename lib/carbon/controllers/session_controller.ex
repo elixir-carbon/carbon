@@ -1,5 +1,6 @@
 defmodule Carbon.SessionController do
   use Carbon.Web, :controller
+  import Carbon
 
   def new(conn, _params) do
     render(conn, "new.html")
@@ -14,9 +15,16 @@ defmodule Carbon.SessionController do
   end
 
   def create(conn, %{"login" => %{"email" => email, "password" => password}}) do
-    case Carbon.attempt(email, password) do
-      user when is_map(user) -> login_user(conn, user)
-      _ -> render_with_error(conn)
+    user = repo.get_by(model, email: email)
+    if (user && verify_password(password, user.password_hash)) do
+      conn
+      |> Carbon.Auth.login(user)
+      |> redirect(to: "/")
+    else
+      # dummy check to time responses
+      # always returns false
+      verify_password(password)
+      render_with_error(conn)
     end
   end
 
@@ -24,12 +32,6 @@ defmodule Carbon.SessionController do
     conn
     |> put_flash(:error, "Invalid email or password")
     |> render("new.html")
-  end
-
-  defp login_user(conn, user) do
-    conn
-    |> Carbon.Auth.login(user)
-    |> redirect(to: "/")
   end
 
   def delete(conn, _params) do
