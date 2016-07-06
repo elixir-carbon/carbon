@@ -1,8 +1,6 @@
 defmodule Carbon.User do
   use Ecto.Schema
-  import Ecto
   import Ecto.Changeset
-  import Ecto.Query
 
 
   schema "users" do
@@ -14,30 +12,28 @@ defmodule Carbon.User do
     timestamps
   end
 
-  @required_fields ~w(email password)
-  @required_fields_reset ~w(password, password_confirmation)
-
-  def changeset(action, user, params \\ %{})
   def changeset(:create, user, params) do
     user
-    |> cast(params, @required_fields)
-    |> validate_required(@required_fields)
+    |> cast(params, [:email, :password])
+    |> validate_required([:email, :password])
     |> validate_confirmation(:password)
+    |> unique_constraint(:email)
     |> hash_password()
-  end
-
-  def changeset(:update, user, params) do
-    user
-    |> cast(params, [:email, :password_hash])
-    |> validate_required([:email, :password_hash])
   end
 
   def changeset(:reset, user, params) do
     user
-    |> cast(params, @required_fields_reset)
-    |> validate_required(@required_fields_reset)
+    |> cast(params, [:password])
+    |> validate_required([:password])
     |> validate_confirmation(:password)
     |> hash_password()
+  end
+
+  def changeset(user, params \\ %{})
+  def changeset(user, params) do
+    user
+    |> cast(params, [:email, :password_hash])
+    |> validate_required([:email, :password_hash])
   end
 
   def hash_password(changeset) do

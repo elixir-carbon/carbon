@@ -1,3 +1,5 @@
-<h1>My Profile</h1>
+<section>
+	<h2>My Profile</h2>
 
-<p>email: <%= @current_user.email %>
+	<p>email: <%= @current_user.email %>
+</section>

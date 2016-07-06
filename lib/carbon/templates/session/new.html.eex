@@ -1,17 +1,19 @@
-<h1>Login</h1>
+<section>
+	<h2>Login</h2>
 
-<%= form_for @conn, "/login", [as: :login, class: "form"], fn f -> %>
-	<div class="form__group">
-		<%= label f, :email %>
-		<%= text_input f, :email %>
-	</div>
-	<div class="form__group">
-		<%= label f, :password %>
-		<%= password_input f, :password %>
-	</div>
-	<div class="form__group form__actions">
-		<%= submit "Login" %>
-	</div>
-<% end %>
+	<%= form_for @conn, "/login", [as: :login, class: "form"], fn f -> %>
+		<div class="form__group">
+			<%= label f, :email %>
+			<%= text_input f, :email %>
+		</div>
+		<div class="form__group">
+			<%= label f, :password %>
+			<%= password_input f, :password %>
+		</div>
+		<div class="form__group form__actions">
+			<%= submit "Login" %>
+		</div>
+	<% end %>
 
-<a href="/password/reset">Forgot password?</a>
+	<a href="/password/reset">Forgot password?</a>
+</section>

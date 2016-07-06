@@ -8,15 +8,73 @@
   <meta name="author" content="">
 
   <title>Carbon</title>
-</head>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
+    body {
+      font-family: "Helvetica Neue", sans-serif;
+      font-size: 14px;
+    }
+
+    .content {
+      width: 400px;
+      margin: 100px auto;
+      box-shadow: 0 0 3px rgba(0,0,0,.4);
+      padding: 30px;
+    }
+
+    .form {}
+
+    .form label {
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    .form input[type=text],
+    .form input[type=email],
+    .form input[type=password],
+    .form input[type=tel],
+    .form input[type=url] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    .form input[type=submit] {
+      padding: 10px 20px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      cursor: pointer;
+      background-color: #ddd;
+      color: #666;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .form__group {
+      margin-bottom: 15px;
+    }
+
+    .alert-info {
+      color: green;
+    }
+
+    .alert-danger {
+      color: red;
+    }
+  </style>
+</head>
 <body>
-  <div class="container">
+
+  <main class="content">
     <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
     <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-    <main role="main">
-      <%= render @view_module, @view_template, assigns %>
-    </main>
-  </div> <!-- /container -->
+
+    <%= render @view_module, @view_template, assigns %>
+  </main>
+
 </body>
 </html>

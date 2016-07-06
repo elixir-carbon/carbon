@@ -4,7 +4,7 @@ defmodule Carbon.UserController do
   alias Carbon.User
 
   def new(conn, _params) do
-    changeset = User.changeset(:create, %User{})
+    changeset = User.changeset(%User{})
     render(conn, "new.html", changeset: changeset)
   end
 
