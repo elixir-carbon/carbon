@@ -18,6 +18,10 @@
       font-size: 14px;
     }
 
+    a, a:visited {
+      color: #177ebb;
+    }
+
     .content {
       width: 400px;
       margin: 100px auto;

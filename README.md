@@ -2,6 +2,10 @@
 
 User library for phoenix and elixir.
 
+
+![Carbon](https://raw.githubusercontent.com/elixirdrops/carbon/master/carbon.png)
+
+
 ## Installation
 
 Carbon is [available in Hex](https://hex.pm/packages/carbon), and can be installed as:
