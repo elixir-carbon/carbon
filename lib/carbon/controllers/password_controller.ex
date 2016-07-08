@@ -18,7 +18,7 @@ defmodule Carbon.PasswordController do
     if user do
       changeset = User.changeset(user, params)
       case repo.update(changeset) do
-        {:ok, user} -> Carbon.Mailer.send_password_reset(user)
+        {:ok, _user} -> :ok # Carbon.Mailer.send_password_reset(user)
         {:error, _changeset} -> :error # I don't know maybe, do nothing
       end
     end

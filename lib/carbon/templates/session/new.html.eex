@@ -15,5 +15,6 @@
 		</div>
 	<% end %>
 
-	<a href="/password/reset">Forgot password?</a>
+	<a href="/password/reset">Forgot password?</a><br>
+	<a href="/register">Register</a>
 </section>
