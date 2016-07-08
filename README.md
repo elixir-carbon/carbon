@@ -14,7 +14,7 @@ Carbon is [available in Hex](https://hex.pm/packages/carbon), and can be install
 
     ```elixir
     def deps do
-      [{:carbon, "~> 0.1.0"}]
+      [{:carbon, "~> 0.1.1"}]
     end
     ```
 

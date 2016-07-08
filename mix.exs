@@ -1,10 +1,11 @@
 defmodule Carbon.Mixfile do
   use Mix.Project
   @repo_url "http://github.com/elixirdrops/carbon"
+  @version "0.1.1"
 
   def project do
     [app: :carbon,
-     version: "0.1.0",
+     version: @version,
      elixir: "~> 1.3",
      package: package(),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
@@ -22,7 +23,7 @@ defmodule Carbon.Mixfile do
   end
 
   def package do
-    [maintainers: ["Al Razi"],
+    [maintainers: ["Al-Razi"],
      licenses: ["Apache 2.0"],
      links: %{"GitHub" => @repo_url},
      files: ~w(lib lib priv test web mix.exs *.md)]
