@@ -12,55 +12,44 @@ Carbon is [available in Hex](https://hex.pm/packages/carbon), and can be install
 
   1. Add `carbon` to your list of dependencies in `mix.exs`:
 
-    ```elixir
-    def deps do
-      [{:carbon, "~> 0.1.1"}]
-    end
-    ```
+        def deps do
+          [{:carbon, "~> 0.1.1"}]
+        end
 
   2. Ensure `carbon` is started before your application:
 
-    ```elixir
-    def application do
-      [applications: [:carbon]]
-    end
-    ```
+        def application do
+          [applications: [:carbon]]
+        end
 
 
 ## Usage
 
 To install carbon in your application 
 
-    ```
-    mix carbon.install
-    ```
+      mix carbon.install
+
   Above command generates a migration, that is all you need to install
   Carbon, you can modify the migration to add your custom fields, 
   Carbon only requires following fields
 
-    * email
-    * password_hash
+      * email
+      * password_hash
 
   To install and migrate database use --migrate switch
 
-    ```bash
-    mix carbon.install --migrate
-    ```
+      mix carbon.install --migrate
 
   Register Carbon routes in your web/router.ex
 
-    ```elixir
-    use Carbon.Routes
-    ```
+      use Carbon.Routes
 
   Carbon registers few routes, and can be overridden
 
-    ```
-    /login
-    /logout
-    /register
-    /password/reset
-    ```
+      /login
+      /logout
+      /register
+      /password/reset
 
 
 ## Roadmap
