@@ -9,7 +9,7 @@ defmodule Mix.Tasks.Carbon.Install do
       mix carbon.install
   """
   def run(args) do
-    {_opts, args, _} = OptionParser.parse(args)
+    {opts, args, _} = OptionParser.parse(args, switches: [migrate: :boolean])
     module = validate(args)
     binding = Mix.Phoenix.inflect(module)
 
@@ -17,8 +17,10 @@ defmodule Mix.Tasks.Carbon.Install do
       {:eex, "migration.exs", "priv/repo/migrations/#{timestamp()}_create_user.exs"},
     ]
 
-    Mix.Task.run "ecto.create"
-    Mix.Task.run "ecto.migrate"
+    if opts[:migrate] do
+      Mix.Task.run "ecto.create"
+      Mix.Task.run "ecto.migrate"
+    end
   end
 
   def validate([singular | _]), do: singular

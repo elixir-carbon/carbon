@@ -26,6 +26,54 @@ Carbon is [available in Hex](https://hex.pm/packages/carbon), and can be install
     end
     ```
 
+
+## Usage
+
+To install carbon in your application 
+
+    ```
+    mix carbon.install
+    ```
+  Above command generates a migration, that is all you need to install
+  Carbon, you can modify the migration to add your custom fields, 
+  Carbon only requires following fields
+
+    * email
+    * password_hash
+
+  To install and migrate database use --migrate switch
+
+    ```bash
+    mix carbon.install --migrate
+    ```
+
+  Register Carbon routes in your web/router.ex
+
+    ```elixir
+    use Carbon.Routes
+    ```
+
+  Carbon registers few routes, and can be overridden
+
+    ```
+    /login
+    /logout
+    /register
+    /password/reset
+    ```
+
+
+## Roadmap
+
+We are using carbon in production already, we have plans for 
+Carbon some of the stuff in pipeline:
+
+    * generators for migration, controllers, views, models, mailers
+    * mailers for welcome,signup,reset emails
+    * oauth integration
+    * multiple adapter support session,jwt and more
+    * and perhaps memberships out of the box
+
 ## Contributing
 
 Contributions are welcome! We love you if you send a PR with some tests.

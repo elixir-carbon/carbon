@@ -15,7 +15,6 @@ defmodule Carbon.Web do
       
       import Ecto
       import Ecto.Query
-      alias Carbon.Repo
     end
   end
 

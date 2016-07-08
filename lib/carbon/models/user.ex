@@ -15,7 +15,9 @@ defmodule Carbon.User do
   def changeset(:create, user, params) do
     user
     |> cast(params, [:email, :password])
+    |> validate_format(:email, ~r/@/)
     |> validate_required([:email, :password])
+    |> validate_length(:password, min: 8)
     |> validate_confirmation(:password)
     |> unique_constraint(:email)
     |> hash_password()
@@ -25,6 +27,7 @@ defmodule Carbon.User do
     user
     |> cast(params, [:password])
     |> validate_required([:password])
+    |> validate_length(:password, min: 8)
     |> validate_confirmation(:password)
     |> hash_password()
   end

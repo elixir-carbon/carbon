@@ -12,7 +12,7 @@ defmodule Carbon.Auth do
   def authenticate(conn, _) do
     case user_logged_in?(conn) do
       nil -> conn |> redirect(to: "/login") |> halt
-      user_id -> put_current_user(conn, user_id)
+      user_id -> put_current_user(conn, get_user(user_id))
     end
   end
 
@@ -39,18 +39,19 @@ defmodule Carbon.Auth do
   def login(conn, user) when is_map(user) do
     conn
     |> put_session(:user_id, user.id)
-    |> assign(:user_id, user.id)
+    |> put_current_user(user)
   end
 
   def login(conn, user_id) when is_integer(user_id) do
     conn
     |> put_session(:user_id, user_id)
-    |> assign(:user_id, user_id)
+    |> put_current_user(get_user(user_id))
   end
+  def login(conn, _), do: conn
 
   def logout(conn) do
     conn
     |> delete_session(:user_id)
-    |> assign(:user_id, nil)
+    |> assign(:current_user, nil)
   end
 end
