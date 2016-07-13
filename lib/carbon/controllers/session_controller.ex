@@ -16,14 +16,14 @@ defmodule Carbon.SessionController do
 
   def create(conn, %{"login" => %{"email" => email, "password" => password}}) do
     user = repo.get_by(model, email: email)
-    if (user && verify_password(password, user.password_hash)) do
+    if (user && password_verify(password, user.password_hash)) do
       conn
       |> Carbon.Auth.login(user)
       |> redirect(to: "/")
     else
-      # dummy check to time responses
+      # dummy check to time response
       # always returns false
-      verify_password(password)
+      password_verify(password)
       render_with_error(conn)
     end
   end

@@ -2,7 +2,6 @@ defmodule Carbon.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-
   schema "users" do
     field :email, :string
     field :password_hash, :string
@@ -41,7 +40,7 @@ defmodule Carbon.User do
 
   def hash_password(changeset) do
     password = get_change(changeset, :password)
-    password_hash = Carbon.hash_password(password)
+    password_hash = Carbon.password_hash(password)
     put_change(changeset, :password_hash, password_hash)
   end
 end

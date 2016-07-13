@@ -40,6 +40,11 @@ To install carbon in your application
 
       mix carbon.install --migrate
 
+  configure  Carbon to use repo
+
+      config :carbon, 
+        repo: MyApp.Repo
+
   Register Carbon routes in your web/router.ex
 
       use Carbon.Routes

@@ -1,13 +1,13 @@
 defmodule Carbon do
-  def hash_password(password) do
+  def password_hash(password) do
     Comeonin.Bcrypt.hashpwsalt(password)
   end
 
-  def verify_password(password, hash) do
+  def password_verify(password, hash) do
     Comeonin.Bcrypt.checkpw(password, hash)
   end
 
-  def verify_password(_) do
+  def password_verify(_) do
     Comeonin.Bcrypt.dummy_checkpw
   end
 

@@ -13,7 +13,9 @@ defmodule Carbon.UserController do
     case repo.insert(user) do
       {:ok, _user} ->
         # maybe send registration email
-        redirect(conn, to: "/login")
+        conn
+        |> put_flash(:info, "You have registered successfully.")
+        |> redirect(to: "/login")
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end

@@ -5,6 +5,7 @@ defmodule Carbon.Repo.Migrations.CreateUser do
   	create table(:users) do
   	  add :email, :string
   	  add :password_hash, :string
+      add :password_reset_token, :string
 
   	  timestamps
   	end
