@@ -11,8 +11,10 @@ defmodule Carbon.UserController do
   def create(conn, %{"user" => user_params}) do
     user = User.changeset(:create, %User{}, user_params)
     case repo.insert(user) do
-      {:ok, _user} ->
-        # maybe send registration email
+      {:ok, user} ->
+        # send registration email
+        Carbon.UserEmail.welcome(user) |> Carbon.Mailer.deliver
+
         conn
         |> put_flash(:info, "You have registered successfully.")
         |> redirect(to: "/login")

@@ -19,7 +19,7 @@ defmodule Carbon.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :phoenix, :phoenix_html]]
+    [applications: [:logger, :phoenix, :phoenix_html, :swoosh]]
   end
 
   def package do

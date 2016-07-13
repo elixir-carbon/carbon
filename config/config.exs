@@ -31,6 +31,10 @@ use Mix.Config
 
 config :carbon, ecto_repos: [Carbon.Repo]
 
+config :carbon, Carbon.Mailer,
+  adapter: Swoosh.Adapters.Logger,
+  level: :debug
+
 config :carbon, Carbon.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",

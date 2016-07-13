@@ -40,10 +40,17 @@ To install carbon in your application
 
       mix carbon.install --migrate
 
-  configure  Carbon to use repo
+  configure Carbon
 
       config :carbon, 
         repo: MyApp.Repo
+
+  Setup a mailer to send out emails, Carbon uses swoosh email library to send out 
+  emails, please visit (Swoosh)[https://github.com/swoosh/swoosh] for more details
+  
+      config :carbon, Carbon.Mailer,
+        adapter: Swoosh.Adapters.Logger,
+        level: :debug
 
   Register Carbon routes in your web/router.ex
 
