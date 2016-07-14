@@ -13,7 +13,7 @@ Carbon is [available in Hex](https://hex.pm/packages/carbon), and can be install
   1. Add `carbon` to your list of dependencies in `mix.exs`:
 
         def deps do
-          [{:carbon, "~> 0.1.1"}]
+          [{:carbon, "~> 0.1.3"}]
         end
 
   2. Ensure `carbon` is started before your application:
@@ -69,11 +69,11 @@ To install carbon in your application
 We are using carbon in production already, we have plans for 
 Carbon some of the stuff in pipeline:
 
-    * generators for migration, controllers, views, models, mailers
-    * mailers for welcome,signup,reset emails
-    * oauth integration
-    * multiple adapter support session,jwt and more
-    * and perhaps memberships out of the box
+- [x] mailers for welcome,signup,reset emails
+- [ ] generators for migration, controllers, views, models, mailers
+- [ ] oauth integration
+- [ ] multiple adapter support session,jwt and more
+- [ ] and perhaps memberships out of the box
 
 ## Contributing
 
