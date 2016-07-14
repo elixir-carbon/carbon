@@ -35,6 +35,7 @@ To install carbon in your application
 
       * email
       * password_hash
+      * password_reset_token
 
   To install and migrate database use --migrate switch
 
@@ -66,8 +67,8 @@ To install carbon in your application
 
 ## Roadmap
 
-We are using carbon in production already, we have plans for 
-Carbon some of the stuff in pipeline:
+We are using carbon in production already, we have big plans for Carbon, 
+here is a short list of the stuff in pipeline:
 
 - [x] mailers for welcome,signup,reset emails
 - [ ] generators for migration, controllers, views, models, mailers
