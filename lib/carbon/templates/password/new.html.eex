@@ -5,6 +5,7 @@
 		<div class="form__group">
 			<%= label f, :email %>
 			<%= email_input f, :email %>
+			<%= error_tag f, :email %>
 		</div>
 		<div class="form__actions">
 			<%= submit "Save"  %>

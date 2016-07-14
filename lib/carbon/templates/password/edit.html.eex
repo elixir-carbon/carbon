@@ -2,13 +2,16 @@
 	<h2>New Password</h2>
 
 	<%= form_for @changeset, "/password/update", [class: "form"], fn f -> %>
+		<%= hidden_input f, :password_reset_token %>
 		<div class="form__group">
 			<%= label f, :password %>
 			<%= password_input f, :password %>
+			<%= error_tag f, :password %>
 		</div>
 		<div class="form__group">
 			<%= label f, :password_confirmation %>
 			<%= password_input f, :password_confirmation %>
+			<%= error_tag f, :password_confirmation %>
 		</div>
 		<div class="form__actions">
 			<%= submit "Save"  %>

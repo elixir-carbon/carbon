@@ -11,6 +11,12 @@ defmodule Carbon do
     Comeonin.Bcrypt.dummy_checkpw
   end
 
+  def password_reset_token do
+    # TODO: improve token generation
+    hash = :crypto.hash(:md5, "#{System.system_time}")
+    Base.encode16(hash, case: :lower)
+  end
+
   def get_user(user_id) do
     repo.get(model(), user_id)
   end

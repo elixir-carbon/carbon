@@ -16,29 +16,33 @@ defmodule Carbon.PasswordController do
   def create(conn, %{"user" => %{"email" => email} = params}) do
     user = repo.get_by(User, email: email)
     if user do
-      changeset = User.changeset(user, params)
+      changeset = User.changeset(:password_reset, user, params)
       case repo.update(changeset) do
-        {:ok, _user} -> :ok # Carbon.Mailer.send_password_reset(user)
-        {:error, _changeset} -> :error # I don't know maybe, do nothing
+        {:ok, user} -> 
+          Carbon.UserEmail.password_reset(user) |> Carbon.Mailer.deliver
+        {:error, _changeset} -> 
+          :error 
       end
     end
-    
+
     conn
     |> put_flash(:info, "Please check your email to reset your password.")
     |> redirect(to: "/")
   end
 
-  def edit(conn, _params) do
-    changeset = User.changeset(:reset, %User{})
+  def edit(conn, %{"password_reset_token" => token} = params) do
+    user = repo.get_by!(User, password_reset_token: token)
+    changeset = User.changeset(user, params)
     render(conn, "edit.html", changeset: changeset)
   end
 
-  def update(conn, %{"user" => %{"token" => token} = params}) do
-    user = repo.get_by!(User, token: token)
-    changeset = User.changeset(:reset, user, params)
+  def update(conn, %{"user" => %{"password_reset_token" => token} = params}) do
+    user = repo.get_by!(User, password_reset_token: token)
+    changeset = User.changeset(:password_update, user, params)
 
     case repo.update(changeset) do
-      {:ok, _user} ->
+      {:ok, user} ->
+        Carbon.UserEmail.password_update(user) |> Carbon.Mailer.deliver
         conn
         |> put_flash(:info, "Your password has been changed successfully.")
         |> redirect(to: "/login")

@@ -17,8 +17,8 @@ defmodule Carbon.Routes do
         get "/password/reset", Carbon.PasswordController, :new
         get "/password/new", Carbon.PasswordController, :new
         post "/password/create", Carbon.PasswordController, :create
-        get "/password/:token/edit", Carbon.PasswordController, :edit
-        post "/password/update", Carbon.PasswordController, :update
+        get "/password/:password_reset_token/edit", Carbon.PasswordController, :edit
+        put "/password/update", Carbon.PasswordController, :update
       end
 
       scope "/" do

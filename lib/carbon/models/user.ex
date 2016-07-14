@@ -5,6 +5,7 @@ defmodule Carbon.User do
   schema "users" do
     field :email, :string
     field :password_hash, :string
+    field :password_reset_token, :string
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
     
@@ -22,9 +23,16 @@ defmodule Carbon.User do
     |> hash_password()
   end
 
-  def changeset(:reset, user, params) do
+  def changeset(:password_reset, user, params) do
     user
-    |> cast(params, [:password])
+    |> cast(params, [:email])
+    |> validate_required([:email])
+    |> generate_reset_token()
+  end
+
+  def changeset(:password_update, user, params) do
+    user
+    |> cast(params, [:password, :password_confirmation])
     |> validate_required([:password])
     |> validate_length(:password, min: 8)
     |> validate_confirmation(:password)
@@ -42,5 +50,10 @@ defmodule Carbon.User do
     password = get_change(changeset, :password)
     password_hash = Carbon.password_hash(password)
     put_change(changeset, :password_hash, password_hash)
+  end
+
+  def generate_reset_token(changeset) do
+    token = Carbon.password_reset_token
+    put_change(changeset, :password_reset_token, token)
   end
 end

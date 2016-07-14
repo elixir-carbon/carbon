@@ -21,4 +21,5 @@
 			<%= submit "Login" %>
 		</div>
 	<% end %>
+	<a href="/login">Already have an account, login?</a><br>
 </section>
